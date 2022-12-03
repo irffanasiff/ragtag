@@ -1,4 +1,3 @@
-import React from 'react';
 import WalletButton from '../buttons/WalletButton.jsx';
 import DashboardSidebar from './DashboardSidebar.jsx';
 

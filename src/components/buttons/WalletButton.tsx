@@ -1,4 +1,4 @@
-import { Button, Center, Text } from '@chakra-ui/react';
+import { Button, Center, HStack, Text } from '@chakra-ui/react';
 import React from 'react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { IoWallet } from 'react-icons/io5';
@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 //import { useAuthStore } from '../../store/useAuthStore';
 
 const WalletButton = () => {
- // const { setAuth } = useAuthStore();
+  // const { setAuth } = useAuthStore();
   const router = useRouter();
   return (
     <ConnectButton.Custom>
@@ -72,49 +72,36 @@ const WalletButton = () => {
 
               if (chain.unsupported) {
                 return (
-                  <button onClick={openChainModal} type='button'>
+                  <Button variant={'unstyled'} onClick={openChainModal}>
                     Wrong network
-                  </button>
+                  </Button>
                 );
               }
 
               return (
-                <div style={{ display: 'flex', gap: 12 }}>
-                  <button
-                    onClick={openChainModal}
-                    style={{ display: 'flex', alignItems: 'center' }}
-                    type='button'
-                  >
+                <HStack>
+                  <Center as='button' onClick={openChainModal}>
                     {chain.hasIcon && (
-                      <div
-                        style={{
-                          background: chain.iconBackground,
-                          width: 12,
-                          height: 12,
-                          borderRadius: 999,
-                          overflow: 'hidden',
-                          marginRight: 4,
-                        }}
-                      >
+                      <Center background={chain.iconBackground} rounded='full'>
                         {chain.iconUrl && (
+                          // eslint-disable-next-line @next/next/no-img-element
                           <img
                             alt={chain.name ?? 'Chain icon'}
                             src={chain.iconUrl}
-                            style={{ width: 12, height: 12 }}
+                            style={{ width: 26, height: 26 }}
                           />
                         )}
-                      </div>
+                      </Center>
                     )}
-                    {chain.name}
-                  </button>
-
-                  <button onClick={openAccountModal} type='button'>
+                  </Center>
+                  <Button
+                    variant={'unstyled'}
+                    onClick={openAccountModal}
+                    fontSize='18px'
+                  >
                     {account.displayName}
-                    {account.displayBalance
-                      ? ` (${account.displayBalance})`
-                      : ''}
-                  </button>
-                </div>
+                  </Button>
+                </HStack>
               );
             })()}
           </div>

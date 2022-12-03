@@ -19,7 +19,6 @@ const Layout: React.FC<Props> = ({ children }) => {
         maxW='full'
         h='100%'
       >
-        {/* <Sidebar /> */}
         {children}
       </Container>
     </Container>

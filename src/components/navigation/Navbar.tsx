@@ -1,10 +1,34 @@
-import { Center, Container, HStack, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
+import {
+  background,
+  Center,
+  Container,
+  HStack,
+  Text,
+  VStack,
+} from '@chakra-ui/react';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import WalletButton from '../buttons/WalletButton';
 
 const Navbar = () => {
+  const [colors, setColors] = useState({ background: 'black', text: 'white' });
+  const router = useRouter();
+
+  useEffect(() => {
+    if (router.pathname === '/') {
+      setColors({ background: 'black', text: 'white' });
+    } else {
+      setColors({ background: 'white', text: 'black' });
+    }
+  }, [router]);
+
   return (
-    <Container py='1.6rem' bg='black' color='white' maxW='full'>
+    <Container
+      py='1.6rem'
+      bg={colors.background}
+      color={colors.text}
+      maxW='full'
+    >
       <HStack
         maxW={'8xl'}
         mx='auto'

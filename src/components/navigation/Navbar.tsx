@@ -1,26 +1,29 @@
-import {
-  background,
-  Center,
-  Container,
-  HStack,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Container, HStack, Text, VStack } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { useAccount } from 'wagmi';
 import WalletButton from '../buttons/WalletButton';
 
 const Navbar = () => {
   const [colors, setColors] = useState({ background: 'black', text: 'white' });
   const router = useRouter();
+  const { address, isConnecting, isDisconnected } = useAccount();
 
   useEffect(() => {
-    if (router.pathname === '/' || '/marketplace') {
+    console.log('path name - ', router.pathname);
+    if (router.pathname === '/' || router.pathname === '/marketplace') {
       setColors({ background: 'black', text: 'white' });
     } else {
       setColors({ background: 'white', text: 'black' });
     }
   }, [router]);
+
+  useEffect(() => {
+    console.log('useeffect');
+    if (address) {
+      router.push('/dashboard');
+    }
+  }, [address]);
 
   return (
     <Container

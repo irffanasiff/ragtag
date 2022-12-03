@@ -7,11 +7,13 @@ import {
   Wrap,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BsArrowUpRight } from 'react-icons/bs';
+import { useAccount } from 'wagmi';
 
 const Marketplace = () => {
   const router = useRouter();
+
   return (
     <Container
       pt='12rem'
@@ -63,7 +65,15 @@ const Marketplace = () => {
             <BsArrowUpRight width={12} />
           </HStack>
         </VStack>
-        <Center flexDir='column' w='fit-content' mx='auto' pr='8rem'></Center>
+        <Center
+          flexDir='column'
+          w='fit-content'
+          mx='auto'
+          pr='8rem'
+          border={'2px solid red'}
+        >
+          <HStack></HStack>
+        </Center>
       </HStack>
     </Container>
   );

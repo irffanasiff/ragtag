@@ -9,9 +9,12 @@ import {
   VStack,
   Text,
   Icon,
+  Flex,
 } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
+// @ts-ignore
+import CircleType from 'circletype';
 import ReactTextTransition, { presets } from 'react-text-transition';
 import { BsArrowUpRight } from 'react-icons/bs';
 import { useRouter } from 'next/router';
@@ -39,6 +42,12 @@ const Home: NextPage = () => {
     'Videos',
     'Designs',
   ];
+
+  useEffect(() => {
+    const circleType = new CircleType(document.getElementById('circularText'));
+    circleType.radius(36).dir(-1);
+  }, []); //empty array will run only once (after the initial render)
+
   useEffect(() => {
     const intervalId = setInterval(
       () => setIndex((index) => index + 1),
@@ -46,6 +55,7 @@ const Home: NextPage = () => {
     );
     return () => clearTimeout(intervalId);
   }, []);
+  
   return (
     <>
       <Container
@@ -148,6 +158,26 @@ const Home: NextPage = () => {
               })}
             </Wrap>
           </Center>
+          <Box
+            display={'flex'}
+            h='30rem'
+            alignItems={'end'}
+            justifyContent='end'
+            pl='10rem'
+          >
+            <Text
+              fontWeight={'700'}
+              fontSize={{ base: '7px', md: '13px' }}
+              textTransform={'uppercase'}
+              className='text'
+              textColor={'white'}
+              id='circularText'
+            >
+              {' '}
+              SELL ASSETS AS NFTS • SELL ASSETS AS NFTS •{' '}
+              {/* {props.roundedText}{' '}•{' '} {props.roundedText}{' '}•{' '} */}
+            </Text>
+          </Box>
         </HStack>
       </Container>
     </>

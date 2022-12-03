@@ -55,6 +55,7 @@ const Home: NextPage = () => {
     );
     return () => clearTimeout(intervalId);
   }, []);
+  
   return (
     <>
       <Container

@@ -9,11 +9,21 @@ import {
   Center,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
+import { useAccount } from 'wagmi';
 import Products from '../../components/Products';
 import Profile from '../../components/Profile';
 
-const index = () => {
+const Index = () => {
+  const router = useRouter();
+  const { address, isDisconnected } = useAccount();
+
+  useEffect(() => {
+    if (!address) {
+      router.push('/');
+    }
+  }, [isDisconnected, address, router]);
   return (
     <Container bg='white' maxW='full' p='0'>
       <Container p='0' maxW='8xl'>
@@ -86,4 +96,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

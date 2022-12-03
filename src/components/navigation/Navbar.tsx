@@ -19,17 +19,11 @@ const Navbar = () => {
   }, [router]);
 
   useEffect(() => {
-    console.log('address - ', address);
+    console.log('useeffect');
     if (address) {
       router.push('/dashboard');
-    } else {
-      router.push('/');
     }
-
-    if (isDisconnected) {
-      router.push('/');
-    }
-  }, [address, isDisconnected]);
+  }, [address]);
 
   return (
     <Container

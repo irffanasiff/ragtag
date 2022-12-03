@@ -1,4 +1,4 @@
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm } from "react-hook-form";
 import {
   FormErrorMessage,
   FormLabel,
@@ -12,7 +12,10 @@ import {
   Select,
   Textarea,
   Flex,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+//@ts-ignore
+import lighthouse from "@lighthouse-web3/sdk";
 
 export default function CreateProduct() {
   const {
@@ -26,92 +29,147 @@ export default function CreateProduct() {
     console.log(values);
   }
 
+  const [uploadedFiles, setUploadedFiles] = useState<any>([]);
+  const inputType = (uploadType: any) => {
+    uploadType === "file" && document.getElementById("file")?.click();
+    uploadType === "folder" && document.getElementById("folder")?.click();
+  };
+
+  const getEventFile = (e: any) => {
+    console.log(e);
+    setUploadedFiles(e);
+  };
+
+  const progressCallback = (progressData: any) => {
+    // let percentageDone =
+    //   100 - (progressData?.total / progressData?.uploaded)?.toFixed(2);
+    // currentProgressFunction(percentageDone);
+  };
+
+  const uploadedFile = async (uploadedFiles: any) => {
+    console.log("first", uploadedFiles);
+
+    uploadedFiles.persist();
+    const uploadResponse = await lighthouse.upload(
+      uploadedFiles,
+      "e425247e-3e3e-4773-9d9a-5ae216ce5b3a",
+      progressCallback
+    );
+    console.log("uploadResponse", uploadResponse);
+  };
+
+  useEffect(() => {
+    if (uploadedFiles?.target?.files.length > 0) {
+      uploadedFile(uploadedFiles);
+    }
+  }, [uploadedFiles]);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Container
-        maxW='full'
-        pb='1.2rem'
-        display='flex'
-        alignItems={'start'}
-        justifyContent='space-between'
-        flexDir={'column'}
-        gap='1rem'
+        maxW="full"
+        pb="1.2rem"
+        display="flex"
+        alignItems={"start"}
+        justifyContent="space-between"
+        flexDir={"column"}
+        gap="1rem"
       >
-        <HStack w='full'>
+        <HStack w="full">
           <FormControl>
-            <FormLabel htmlFor='name' color='black' fontSize={'md'}>
+            <FormLabel htmlFor="name" color="black" fontSize={"md"}>
               Product Name
             </FormLabel>
             <Input
-              color={'black'}
-              id='Product Name'
-              placeholder='name'
-              {...register('name', {
-                required: 'This is required',
-                minLength: { value: 4, message: 'Minimum length should be 4' },
+              color={"black"}
+              id="Product Name"
+              placeholder="name"
+              {...register("name", {
+                required: "This is required",
+                minLength: { value: 4, message: "Minimum length should be 4" },
               })}
             />
           </FormControl>
           <FormControl>
-            <FormLabel color='black' htmlFor='name'>
+            <FormLabel color="black" htmlFor="name">
               Pricing
             </FormLabel>
             <InputGroup>
               <Input
-                color='black'
-                id='pricing'
-                placeholder='0.0'
-                {...register('pricing', {
-                  required: 'This is required',
+                color="black"
+                id="pricing"
+                placeholder="0.0"
+                {...register("pricing", {
+                  required: "This is required",
                 })}
               />
-              <InputRightAddon color='black' backgroundColor='white'>
+              <InputRightAddon color="black" backgroundColor="white">
                 <Select
-                  outline={'0px'}
-                  border='0px'
-                  _selected={{ border: '0px' }}
-                  _active={{ border: '0px' }}
-                  _focus={{ border: '0px' }}
-                  color='black'
-                  {...register('tokenType', { required: true })}
+                  outline={"0px"}
+                  border="0px"
+                  _selected={{ border: "0px" }}
+                  _active={{ border: "0px" }}
+                  _focus={{ border: "0px" }}
+                  color="black"
+                  {...register("tokenType", { required: true })}
                 >
-                  <option value='' color='grey.400'>
+                  <option value="" color="grey.400">
                     Select Token
                   </option>
-                  <option value='eth'>Ethereum</option>
-                  <option value='matic'>Matic</option>
+                  <option value="eth">Ethereum</option>
+                  <option value="matic">Matic</option>
                 </Select>
               </InputRightAddon>
             </InputGroup>
           </FormControl>
         </HStack>
         <FormControl>
-          <FormLabel htmlFor='name' color='black' fontSize={'md'}>
+          <FormLabel htmlFor="name" color="black" fontSize={"md"}>
             Description
           </FormLabel>
           <Textarea
-            color={'black'}
-            id='description'
-            placeholder='description'
-            {...register('description', {
-              required: 'This is required',
-              minLength: { value: 10, message: 'Minimum length should be 10' },
+            color={"black"}
+            id="description"
+            placeholder="description"
+            {...register("description", {
+              required: "This is required",
+              minLength: { value: 10, message: "Minimum length should be 10" },
             })}
           />
         </FormControl>
+
+        {/* <FormControl>
+          <FormLabel htmlFor="name" color="black" fontSize={"md"}>
+            File upload
+          </FormLabel>
+          <Input
+            color={"black"}
+            id="fileUpload"
+            type="file"
+            placeholder="fileUpload"
+            onChange={(e) => getEventFile(e, "file")}
+            // {...register("fileUpload", {
+            //   required: "This is required",
+            //   // minLength: { value: 10, message: "Minimum length should be 10" },
+            // })}
+          />
+        </FormControl> */}
+
+        <input type="file" id="file" onChange={(e) => getEventFile(e)} />
+        <Button onClick={() => inputType("file")}>Upload file</Button>
         <Flex
-          flexDir={'row'}
-          w='full'
-          alignItems={'flex-end'}
-          justify='flex-end'
+          flexDir={"row"}
+          w="full"
+          alignItems={"flex-end"}
+          justify="flex-end"
         >
           <Button
             mt={4}
-            bg='black'
-            color='white'
-            _hover={{ bg: 'black' }}
+            bg="black"
+            color="white"
+            _hover={{ bg: "black" }}
             isLoading={isSubmitting}
-            type='submit'
+            type="submit"
           >
             Submit
           </Button>

@@ -73,13 +73,13 @@ export default function CreateProduct() {
                   _active={{ border: '0px' }}
                   _focus={{ border: '0px' }}
                   color='black'
-                  {...register('category', { required: true })}
+                  {...register('tokenType', { required: true })}
                 >
                   <option value='' color='grey.400'>
                     Select Token
                   </option>
-                  <option value='A'>Ethereum</option>
-                  <option value='B'>Matic</option>
+                  <option value='eth'>Ethereum</option>
+                  <option value='matic'>Matic</option>
                 </Select>
               </InputRightAddon>
             </InputGroup>

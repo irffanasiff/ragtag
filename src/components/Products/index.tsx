@@ -26,7 +26,7 @@ const Products = () => {
       {products.length > 0 ? (
         'full'
       ) : (
-        <Container py='6rem' maxW='full'>
+        <Container py='6rem' pr='10rem' maxW='full'>
           <Modal size={'3xl'} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent rounded='2xl'>

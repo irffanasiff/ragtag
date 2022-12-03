@@ -15,7 +15,7 @@ const Navbar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (router.pathname === '/') {
+    if (router.pathname === '/' || '/marketplace') {
       setColors({ background: 'black', text: 'white' });
     } else {
       setColors({ background: 'white', text: 'black' });
@@ -35,7 +35,14 @@ const Navbar = () => {
         justify='space-between'
         alignItems={'center'}
       >
-        <Text fontSize={'2xl'} fontWeight='600'>
+        <Text
+          as='button'
+          onClick={() => {
+            router.push('/');
+          }}
+          fontSize={'2xl'}
+          fontWeight='600'
+        >
           ragtag
         </Text>
         <WalletButton />

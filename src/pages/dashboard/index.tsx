@@ -7,6 +7,7 @@ import {
   Tab,
   TabPanel,
   Center,
+  Text,
 } from '@chakra-ui/react';
 import React from 'react';
 import Products from '../../components/Products';
@@ -21,43 +22,52 @@ const index = () => {
             background='white'
             color='black'
             pb='30rem'
-            pt='5rem'
+            pt='2rem'
             pr='10rem'
-            gap='1rem'
+            gap='0.7rem'
             alignItems={'start'}
           >
+            <Text fontWeight={'500'} fontSize='18px'>
+              Items
+            </Text>
             <Tab
               color='black'
-              fontSize='20px'
-              p='0'
-              borderBottom={'2px solid white'}
-              _selected={{ borderBottomColor: 'black' }}
+              fontSize='16px'
+              p='2 4'
+              _selected={{ bg: 'gray.100', borderRadius: '4px' }}
             >
               Products
             </Tab>
             <Tab
-              fontSize='20px'
-              p='0'
-              borderBottom={'2px solid white'}
-              _selected={{ borderBottomColor: 'black' }}
+              fontSize='16px'
+              p='2 4'
+              _selected={{ bg: 'gray.100', borderRadius: '4px' }}
             >
               Customers
             </Tab>
             <Tab
-              fontSize='20px'
-              p='0'
-              borderBottom={'2px solid white'}
-              _selected={{ borderBottomColor: 'black' }}
+              fontSize='16px'
+              p='2 4'
+              _selected={{ bg: 'gray.100', borderRadius: '4px' }}
             >
               Analytics
             </Tab>
+            <Text fontWeight={'500'} fontSize='18px'>
+              Profile
+            </Text>
             <Tab
-              fontSize='20px'
-              p='0'
-              borderBottom={'2px solid white'}
-              _selected={{ borderBottomColor: 'black' }}
+              fontSize='16px'
+              p='2 4'
+              _selected={{ bg: 'gray.100', borderRadius: '4px' }}
             >
               Profile
+            </Tab>{' '}
+            <Tab
+              fontSize='16px'
+              p='2 4'
+              _selected={{ bg: 'gray.100', borderRadius: '4px' }}
+            >
+              Setting
             </Tab>
           </TabList>
           <TabPanels>

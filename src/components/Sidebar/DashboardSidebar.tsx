@@ -1,38 +1,19 @@
 import React, { ReactNode } from 'react';
 import {
   IconButton,
-  Avatar,
   Box,
   CloseButton,
   Flex,
   HStack,
-  VStack,
-  Icon,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
   BoxProps,
   FlexProps,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  calc,
 } from '@chakra-ui/react';
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
-} from 'react-icons/fi';
+import { FiMenu, FiBell, FiChevronDown } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import NextLink from 'next/link';
@@ -52,11 +33,11 @@ const LinkItems: Array<LinkItemProps> = [
 export default function DashboardSidebar({
   children,
 }: {
-  children: ReactNode;
+  children: ReactNode,
 }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+    <Box minH='100vh' bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: 'none', md: 'block' }}
@@ -64,11 +45,11 @@ export default function DashboardSidebar({
       <Drawer
         autoFocus={false}
         isOpen={isOpen}
-        placement="left"
+        placement='left'
         onClose={onClose}
         returnFocusOnClose={false}
         onOverlayClick={onClose}
-        size="full"
+        size='full'
       >
         <DrawerContent>
           <SidebarContent onClose={onClose} />
@@ -76,7 +57,7 @@ export default function DashboardSidebar({
       </Drawer>
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
-      <Box ml={{ base: 0, md: 60 }} background="white" minH="90vh">
+      <Box ml={{ base: 0, md: 60 }} background='white' minH='90vh'>
         {children}
       </Box>
     </Box>
@@ -90,24 +71,24 @@ interface SidebarProps extends BoxProps {
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
-      transition="3s ease"
+      transition='3s ease'
       bg={useColorModeValue('black', 'white')}
       color={useColorModeValue('white', 'black')}
       //   borderRight="1px"
       //   borderRightColor={useColorModeValue('gray.200', 'gray.700')}
       w={{ base: 'full', md: 60 }}
-      pos="fixed"
-      h="full"
+      pos='fixed'
+      h='full'
       {...rest}
     >
       <Flex
-        h="20"
-        alignItems="center"
-        m="10"
+        h='20'
+        alignItems='center'
+        m='10'
         justifyContent={{ base: 'space-between', md: 'center' }}
       >
-        <NextLink href="/">
-          <Text fontSize="2xl" fontFamily="monosans" fontWeight="bold">
+        <NextLink href='/'>
+          <Text fontSize='2xl' fontFamily='monosans' fontWeight='bold'>
             ragtag.fun
           </Text>
         </NextLink>
@@ -135,12 +116,12 @@ const NavItem = ({ link, children, ...rest }: NavItemProps) => {
       // _focus={{ boxShadow: 'none' }}
     >
       <Flex
-        align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
-        role="group"
-        cursor="pointer"
+        align='center'
+        p='4'
+        mx='4'
+        borderRadius='lg'
+        role='group'
+        cursor='pointer'
         justifyContent={{ base: 'space-between', md: 'center' }}
         _focus={{
           bg: 'cyan.400',
@@ -162,8 +143,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     <Flex
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 4 }}
-      height="20"
-      alignItems="center"
+      height='20'
+      alignItems='center'
       bg={useColorModeValue('white', 'gray.900')}
       // borderBottomWidth="1px"
       // borderBottomColor={useColorModeValue('gray.200', 'gray.700')}
@@ -173,29 +154,29 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       <IconButton
         display={{ base: 'flex', md: 'none' }}
         onClick={onOpen}
-        variant="outline"
-        aria-label="open menu"
+        variant='outline'
+        aria-label='open menu'
         icon={<FiMenu />}
       />
 
       <Text
         display={{ base: 'flex', md: 'none' }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
+        fontSize='2xl'
+        fontFamily='monospace'
+        fontWeight='bold'
       >
         ragtag.fun
       </Text>
 
-      <HStack w="full" spacing={{ base: '0', md: '0' }}>
+      <HStack w='full' spacing={{ base: '0', md: '0' }}>
         <IconButton
-          size="lg"
-          variant="ghost"
-          aria-label="open menu"
+          size='lg'
+          variant='ghost'
+          aria-label='open menu'
           icon={<FiBell />}
         />
         <Flex alignItems={'center'}>
-          <Text fontSize="sm" fontWeight="700">
+          <Text fontSize='sm' fontWeight='700'>
             0xds...sdf60
           </Text>
           {/* <Menu>

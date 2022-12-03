@@ -25,9 +25,14 @@ export default function CreateProduct() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  function onSubmit(values: any) {
+  const onSubmit = async (values: any) => {
     console.log(values);
-  }
+    let uploadResponse;
+    if (uploadedFiles?.target?.files.length > 0) {
+      uploadResponse = await uploadedFile(uploadedFiles);
+    }
+    // values.file = uploadResponse?.data?.Hash;
+  };
 
   const [uploadedFiles, setUploadedFiles] = useState<any>([]);
   const inputType = (uploadType: any) => {
@@ -58,11 +63,11 @@ export default function CreateProduct() {
     console.log("uploadResponse", uploadResponse);
   };
 
-  useEffect(() => {
-    if (uploadedFiles?.target?.files.length > 0) {
-      uploadedFile(uploadedFiles);
-    }
-  }, [uploadedFiles]);
+  // useEffect(() => {
+  //   if (uploadedFiles?.target?.files.length > 0) {
+  //     uploadedFile(uploadedFiles);
+  //   }
+  // }, [uploadedFiles]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -155,7 +160,16 @@ export default function CreateProduct() {
           />
         </FormControl> */}
 
-        <input type="file" id="file" onChange={(e) => getEventFile(e)} />
+        {/* <input type="file" id="file" onChange={(e) => getEventFile(e)} /> */}
+        <input
+          type="file"
+          id="file"
+          {...register("file", {
+            onChange: (e) => {
+              getEventFile(e);
+            },
+          })}
+        />
         <Button onClick={() => inputType("file")}>Upload file</Button>
         <Flex
           flexDir={"row"}

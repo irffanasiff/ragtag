@@ -63,7 +63,17 @@ const Marketplace = () => {
             <BsArrowUpRight width={12} />
           </HStack>
         </VStack>
-        <Center flexDir='column' w='fit-content' mx='auto' pr='8rem'></Center>
+        <Center
+          flexDir='column'
+          w='fit-content'
+          mx='auto'
+          pr='8rem'
+          border={'2px solid red'}
+              >
+                  <HStack>
+                      
+                  </HStack>
+        </Center>
       </HStack>
     </Container>
   );

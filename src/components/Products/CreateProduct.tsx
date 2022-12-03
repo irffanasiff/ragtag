@@ -16,22 +16,52 @@ import {
 import { useEffect, useState } from "react";
 //@ts-ignore
 import lighthouse from "@lighthouse-web3/sdk";
+import { Web3Storage } from "web3.storage";
 
 export default function CreateProduct() {
   const {
     control,
     handleSubmit,
     register,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm();
+
+  function getAccessToken() {
+    console.log(process.env.NEXT_PUBLIC_WEB3STORAGE_TOKEN);
+    return process.env.NEXT_PUBLIC_WEB3STORAGE_TOKEN;
+  }
+
+  function makeStorageClient() {
+    const accessToken = getAccessToken() as string;
+    console.log("accessToken", accessToken);
+    return new Web3Storage({ token: accessToken });
+  }
 
   const onSubmit = async (values: any) => {
     console.log(values);
     let uploadResponse;
     if (uploadedFiles?.target?.files.length > 0) {
       uploadResponse = await uploadedFile(uploadedFiles);
+      console.log("uploadResponse", uploadResponse);
     }
-    // values.file = uploadResponse?.data?.Hash;
+    values.file = uploadResponse?.data?.Hash;
+    console.log("valuesssss", values);
+    const client = makeStorageClient();
+    const obj = {
+      name: values.name,
+      description: values.description,
+      category: values.category,
+      // thumbnail: values.img,
+    };
+    const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
+
+    const files = [new File([blob], "metadata.json")];
+    console.log(files);
+    const metadata_cid = await client.put(files);
+
+    console.log("stored files with cid:", metadata_cid);
+    // return cid;
   };
 
   const [uploadedFiles, setUploadedFiles] = useState<any>([]);
@@ -60,14 +90,11 @@ export default function CreateProduct() {
       "e425247e-3e3e-4773-9d9a-5ae216ce5b3a",
       progressCallback
     );
-    console.log("uploadResponse", uploadResponse);
-  };
 
-  // useEffect(() => {
-  //   if (uploadedFiles?.target?.files.length > 0) {
-  //     uploadedFile(uploadedFiles);
-  //   }
-  // }, [uploadedFiles]);
+    console.log("uploadResponse", uploadResponse);
+    reset();
+    return uploadResponse;
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -85,15 +112,39 @@ export default function CreateProduct() {
             <FormLabel htmlFor="name" color="black" fontSize={"md"}>
               Product Name
             </FormLabel>
-            <Input
-              color={"black"}
-              id="Product Name"
-              placeholder="name"
-              {...register("name", {
-                required: "This is required",
-                minLength: { value: 4, message: "Minimum length should be 4" },
-              })}
-            />
+            <InputGroup>
+              <Input
+                color={"black"}
+                id="Product Name"
+                placeholder="name"
+                {...register("name", {
+                  required: "This is required",
+                  minLength: {
+                    value: 4,
+                    message: "Minimum length should be 4",
+                  },
+                })}
+              />
+              <InputRightAddon color="black" backgroundColor="white">
+                <Select
+                  outline={"0px"}
+                  border="0px"
+                  _selected={{ border: "0px" }}
+                  _active={{ border: "0px" }}
+                  _focus={{ border: "0px" }}
+                  color="black"
+                  {...register("category", { required: true })}
+                >
+                  <option value="" color="grey.400">
+                    Category
+                  </option>
+                  <option value="book">book</option>
+                  <option value="PDF">PDF</option>
+                  <option value="image">image</option>
+                  <option value="video">video</option>
+                </Select>
+              </InputRightAddon>
+            </InputGroup>
           </FormControl>
           <FormControl>
             <FormLabel color="black" htmlFor="name">
@@ -121,7 +172,8 @@ export default function CreateProduct() {
                   <option value="" color="grey.400">
                     Select Token
                   </option>
-                  <option value="eth">Ethereum</option>
+                  <option value="USDT">USDT</option>
+                  <option value="USDC">USDC</option>
                   <option value="matic">Matic</option>
                 </Select>
               </InputRightAddon>

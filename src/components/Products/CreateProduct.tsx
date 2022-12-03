@@ -14,11 +14,12 @@ import {
   Flex,
   Text,
   Image,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 //@ts-ignore
-import lighthouse from "@lighthouse-web3/sdk";
-import { Web3Storage } from "web3.storage";
+import lighthouse from '@lighthouse-web3/sdk';
+import { Web3Storage } from 'web3.storage';
 import { MdCloudUpload } from 'react-icons/md';
 
 export default function CreateProduct() {
@@ -39,7 +40,7 @@ export default function CreateProduct() {
 
   function makeStorageClient() {
     const accessToken = getAccessToken() as string;
-    console.log("accessToken", accessToken);
+    console.log('accessToken', accessToken);
     return new Web3Storage({ token: accessToken });
   }
 
@@ -48,10 +49,10 @@ export default function CreateProduct() {
     let uploadResponse;
     if (uploadedFiles?.target?.files.length > 0) {
       uploadResponse = await uploadedFile(uploadedFiles);
-      console.log("uploadResponse", uploadResponse);
+      console.log('uploadResponse', uploadResponse);
     }
     values.file = uploadResponse?.data?.Hash;
-    console.log("valuesssss", values);
+    console.log('valuesssss', values);
     const client = makeStorageClient();
     const obj = {
       name: values.name,
@@ -59,13 +60,13 @@ export default function CreateProduct() {
       category: values.category,
       // thumbnail: values.img,
     };
-    const blob = new Blob([JSON.stringify(obj)], { type: "application/json" });
+    const blob = new Blob([JSON.stringify(obj)], { type: 'application/json' });
 
-    const files = [new File([blob], "metadata.json")];
+    const files = [new File([blob], 'metadata.json')];
     console.log(files);
     const metadata_cid = await client.put(files);
 
-    console.log("stored files with cid:", metadata_cid);
+    console.log('stored files with cid:', metadata_cid);
     // return cid;
   };
 
@@ -156,37 +157,37 @@ export default function CreateProduct() {
             </FormLabel>
             <InputGroup>
               <Input
-                color={"black"}
-                id="Product Name"
-                placeholder="name"
-                {...register("name", {
-                  required: "This is required",
+                color={'black'}
+                id='Product Name'
+                placeholder='name'
+                {...register('name', {
+                  required: 'This is required',
                   minLength: {
                     value: 4,
-                    message: "Minimum length should be 4",
+                    message: 'Minimum length should be 4',
                   },
                 })}
               />
-              <InputRightAddon color="black" backgroundColor="white">
+              <InputRightAddon color='black' backgroundColor='white'>
                 <Select
-                  outline={"0px"}
-                  border="0px"
-                  _selected={{ border: "0px" }}
-                  _active={{ border: "0px" }}
-                  _focus={{ border: "0px" }}
-                  color="black"
-                  {...register("category", { required: true })}
+                  outline={'0px'}
+                  border='0px'
+                  _selected={{ border: '0px' }}
+                  _active={{ border: '0px' }}
+                  _focus={{ border: '0px' }}
+                  color='black'
+                  {...register('category', { required: true })}
                 >
-                  <option value="" color="grey.400">
+                  <option value='' color='grey.400'>
                     Category
                   </option>
-                  <option value="book">book</option>
-                  <option value="PDF">PDF</option>
-                  <option value="image">image</option>
-                  <option value="video">video</option>
+                  <option value='book'>book</option>
+                  <option value='PDF'>PDF</option>
+                  <option value='image'>image</option>
+                  <option value='video'>video</option>
                 </Select>
               </InputRightAddon>
-            </InputGroup> 
+            </InputGroup>
           </FormControl>
           <FormControl>
             <FormLabel color='black' htmlFor='name'>

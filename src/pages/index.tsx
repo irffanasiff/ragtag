@@ -55,7 +55,7 @@ const Home: NextPage = () => {
     );
     return () => clearTimeout(intervalId);
   }, []);
-  
+
   return (
     <>
       <Container
@@ -73,46 +73,6 @@ const Home: NextPage = () => {
           maxW='8xl'
           mx='auto'
         >
-          <VStack
-            pr={'20rem'}
-            alignItems='start'
-            fontSize={'20px'}
-            gap='0.6rem'
-          >
-            <HStack
-              as='button'
-              onClick={() => {
-                router.push('/marketplace');
-              }}
-              borderBottom={'1px solid black'}
-              _hover={{ borderColor: 'white' }}
-            >
-              <Text>Marketplace</Text>
-              <BsArrowUpRight width={12} />
-            </HStack>
-            <HStack
-              as='button'
-              onClick={() => {
-                router.push('/community');
-              }}
-              borderBottom={'1px solid black'}
-              _hover={{ borderColor: 'white' }}
-            >
-              <Text>Community</Text>
-              <BsArrowUpRight width={12} />
-            </HStack>
-            <HStack
-              as='button'
-              onClick={() => {
-                router.push('/about');
-              }}
-              borderBottom={'1px solid black'}
-              _hover={{ borderColor: 'white' }}
-            >
-              <Text>About</Text>
-              <BsArrowUpRight width={12} />
-            </HStack>
-          </VStack>
           <Center flexDir='column' w='fit-content' mx='auto' pr='8rem'>
             <Heading
               lineHeight={'110px'}

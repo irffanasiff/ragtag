@@ -11,7 +11,12 @@ const Navbar = () => {
 
   useEffect(() => {
     console.log('path name - ', router.pathname);
-    if (router.pathname === '/' || router.pathname === '/marketplace') {
+    if (
+      router.pathname === '/' ||
+      router.pathname === '/marketplace' ||
+      router.pathname === '/community' ||
+      router.pathname === '/404'
+    ) {
       setColors({ background: 'black', text: 'white' });
     } else {
       setColors({ background: 'white', text: 'black' });

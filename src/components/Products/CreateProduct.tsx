@@ -16,11 +16,13 @@ import {
   Image,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 //@ts-ignore
 import lighthouse from '@lighthouse-web3/sdk';
 import { Web3Storage } from 'web3.storage';
 import { MdCloudUpload } from 'react-icons/md';
+import AppContext from '../appContext';
+import { ProductType } from '../AppState';
 
 export default function CreateProduct() {
   const [uploadedFiles, setUploadedFiles] = useState<any>([]);
@@ -32,6 +34,7 @@ export default function CreateProduct() {
     watch,
     formState: { errors, isSubmitting },
   } = useForm();
+  const { setProduct } = useContext(AppContext);
 
   function getAccessToken() {
     console.log(process.env.NEXT_PUBLIC_WEB3STORAGE_TOKEN);
@@ -46,6 +49,19 @@ export default function CreateProduct() {
 
   const onSubmit = async (values: any) => {
     console.log(values);
+    // @ts-ignore
+    setProduct((prevValue: ProductType[]) => {
+      return [
+        {
+          name: values?.name,
+          description: values?.description,
+          thumbnail: values?.thumbnail,
+          content: values?.content,
+          category: values?.category,
+          cost: values?.cost,
+        },
+      ];
+    });
     let uploadResponse;
     if (uploadedFiles?.target?.files.length > 0) {
       uploadResponse = await uploadedFile(uploadedFiles);

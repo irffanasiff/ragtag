@@ -1,13 +1,25 @@
-import { Container, HStack, Text, VStack } from '@chakra-ui/react';
+import {
+  Button,
+  Container,
+  HStack,
+  IconButton,
+  Text,
+  useDisclosure,
+  VStack,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAccount } from 'wagmi';
 import WalletButton from '../buttons/WalletButton';
+import NotificationDrawer from './NotificationDrawer';
+import { MdCircleNotifications } from 'react-icons/md';
 
 const Navbar = () => {
   const [colors, setColors] = useState({ background: 'black', text: 'white' });
   const router = useRouter();
   const { address, isConnecting, isDisconnected } = useAccount();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
 
   useEffect(() => {
     console.log('path name - ', router.pathname);
@@ -37,6 +49,7 @@ const Navbar = () => {
       color={colors.text}
       maxW='full'
     >
+      <NotificationDrawer onClose={onClose} isOpen={isOpen} />
       <HStack
         maxW={'8xl'}
         mx='auto'
@@ -53,7 +66,17 @@ const Navbar = () => {
         >
           ragtag
         </Text>
-        <WalletButton />
+        <HStack>
+          <MdCircleNotifications
+            color='black'
+            onClick={onOpen}
+            style={{
+              width: '32px',
+              height: '32px',
+            }}
+          />
+          <WalletButton />
+        </HStack>
       </HStack>
     </Container>
   );

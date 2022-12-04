@@ -8,9 +8,10 @@ import {
   TabPanel,
   Center,
   Text,
+  VStack,
 } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useAccount } from 'wagmi';
 import Products from '../../components/Products';
 import Profile from '../../components/Profile';
@@ -26,7 +27,13 @@ const Index = () => {
   }, [isDisconnected, address, router]);
   return (
     <Container bg='white' maxW='full' p='0'>
-      <Container p='0' maxW='8xl'>
+      <Container
+        p='0'
+        maxW='8xl'
+        display={'flex'}
+        flexDir='row'
+        justifyContent={'space-between'}
+      >
         <Tabs orientation='vertical' variant='unstyled'>
           <TabList
             background='white'

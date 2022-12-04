@@ -13,10 +13,12 @@ import {
   ModalCloseButton,
   ModalBody,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import Image from 'next/image';
 import React from 'react';
+import { ProductType } from './AppState';
 
-const ItemCard = () => {
+const ItemCard = ({ product }: { product: ProductType }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -50,7 +52,7 @@ const ItemCard = () => {
       >
         <Center rounded={'xl'} shadow='2xl'>
           <Image
-            src='/img.png'
+            src={product.thumbnail!}
             alt='random'
             width={280}
             height={280}
@@ -58,19 +60,17 @@ const ItemCard = () => {
           />
         </Center>
         <HStack justifyContent={'space-between'} w='full'>
-          <Text fontWeight={'500'}>Hello World</Text>
-          <Text>2.0 ETH</Text>
+          <Text fontWeight={'500'}>{product.name}</Text>
+          <Text>
+            {product.cost} {product.token}
+          </Text>
         </HStack>
         <HStack justifyContent={'space-between'} w='full'>
           <Wrap>
             <Tag rounded={'full'} colorScheme='purple'>
-              Hello
-            </Tag>
-            <Tag rounded={'full'} colorScheme='green'>
-              world
+              {product.category}
             </Tag>
           </Wrap>
-          <Text color='blackAlpha.500'>by 9fp2..5ji9</Text>
         </HStack>
       </Box>
     </>

@@ -26,6 +26,7 @@ import { ProductType } from '../AppState';
 
 export default function CreateProduct() {
   const [uploadedFiles, setUploadedFiles] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
   const {
     control,
     handleSubmit,
@@ -49,19 +50,25 @@ export default function CreateProduct() {
 
   const onSubmit = async (values: any) => {
     console.log(values);
-    // @ts-ignore
-    setProduct((prevValue: ProductType[]) => {
-      return [
-        {
-          name: values?.name,
-          description: values?.description,
-          thumbnail: values?.thumbnail,
-          content: values?.content,
-          category: values?.category,
-          cost: values?.cost,
-        },
-      ];
-    });
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      reset();
+      // @ts-ignore
+      setProduct((prevValue: ProductType[]) => {
+        return [
+          {
+            name: values?.name,
+            description: values?.description,
+            thumbnail: values?.thumbnail,
+            content: values?.content,
+            category: values?.category,
+            cost: values?.cost,
+          },
+        ];
+      });
+    }, 4000);
+
     let uploadResponse;
     if (uploadedFiles?.target?.files.length > 0) {
       uploadResponse = await uploadedFile(uploadedFiles);
@@ -114,7 +121,6 @@ export default function CreateProduct() {
       'e425247e-3e3e-4773-9d9a-5ae216ce5b3a',
       progressCallback
     );
-    reset();
     return uploadResponse;
   };
 
@@ -294,7 +300,7 @@ export default function CreateProduct() {
             bg='black'
             color='white'
             _hover={{ bg: 'black' }}
-            isLoading={isSubmitting}
+            isLoading={loading}
             type='submit'
           >
             Submit

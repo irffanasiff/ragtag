@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { MdNotificationsActive } from 'react-icons/md';
 import { FaEthereum } from 'react-icons/fa';
+import * as PushAPI from '@pushprotocol/restapi';
 
 const EthNotificationCard = () => {
   return (
@@ -76,6 +77,14 @@ const MaticNotificationCard = () => {
   );
 };
 const NotificationDrawer = ({ onClose, isOpen }: any) => {
+  const fetch = async (account: any) => {
+    const spams = await PushAPI.user.getFeeds({
+      user: `eip155:5:${account}`, // user address in CAIP
+      spam: true,
+      env: 'staging',
+    });
+    console.log(spams);
+  };
   return (
     <Drawer isOpen={isOpen} placement='right' size={'sm'} onClose={onClose}>
       <DrawerOverlay />
@@ -95,8 +104,6 @@ const NotificationDrawer = ({ onClose, isOpen }: any) => {
             justify={'start'}
             gap='0.2rem'
           >
-            <EthNotificationCard />
-            <MaticNotificationCard />
             <EthNotificationCard />
           </VStack>
         </DrawerBody>

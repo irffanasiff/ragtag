@@ -1,0 +1,14 @@
+type User @entity {
+  id: ID!
+  address: Bytes!
+  tokenId: BigInt
+  creator: Bytes
+  rentTime: BigInt
+  tokenURI: String
+  price: BigInt
+  rentPrice: BigInt
+  tokenAddress: Bytes
+  supply: BigInt
+  matic: Boolean
+  rentable: Boolean
+}

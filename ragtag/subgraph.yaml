@@ -1,0 +1,45 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Gumroad
+    network: mumbai
+    source:
+      address: "0xF35065610c9cED6Df51f0967e4107A3E00fBf6e5"
+      abi: Gumroad
+      startBlock : 29471575
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - ApprovalForAll
+        - Bought
+        - Created
+        - Rent
+        - Resell
+        - TransferBatch
+        - TransferSingle
+        - URI
+      abis:
+        - name: Gumroad
+          file: ./abis/Gumroad.json
+      eventHandlers:
+        - event: ApprovalForAll(indexed address,indexed address,bool)
+          handler: handleApprovalForAll
+        - event: Bought(uint256,indexed uint256,indexed address,string,address)
+          handler: handleBought
+        - event: Created(uint256,indexed uint256,indexed address,address,uint256,uint256,string,bool,uint256)
+          handler: handleCreated
+        - event: Rent(uint256,indexed uint256,indexed address,uint256,string,uint256,uint256)
+          handler: handleRent
+        - event: Resell(uint256,indexed uint256,indexed address,uint256,string,address,bool)
+          handler: handleResell
+        - event: TransferBatch(indexed address,indexed address,indexed address,uint256[],uint256[])
+          handler: handleTransferBatch
+        - event: TransferSingle(indexed address,indexed address,indexed address,uint256,uint256)
+          handler: handleTransferSingle
+        - event: URI(string,indexed uint256)
+          handler: handleURI
+      file: ./src/gumroad.ts
